@@ -1,0 +1,12 @@
+.book {
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: burlywood;
+    height: 100px;
+}
+
+.book-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
