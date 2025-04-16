@@ -1,15 +1,20 @@
 const myLibrary = new Array();
 
-function Book(title, author, pageCount) {
+function Book(title, author, pageCount, read = false) {
     this.title = title;
     this.author = author;
     this.pageCount = pageCount;
     this.id = crypto.randomUUID();
+    this.read = read;
 }
 
 Book.prototype.info = function() {
     return `${this.title} by ${this.author}, ${this.pageCount} pages`;
 };
+
+Book.prototype.toggleRead = function() {
+    this.read = !this.read;
+}
 
 function addBookToLibrary(title, author, pageCount) {
     let newBook = new Book(title, author, pageCount);
@@ -35,6 +40,23 @@ function createRemoveBtn(cardElement) {
     return removeBtn;
 }
 
+function createReadToggleBtn(cardElement) {
+    toggleBtn = document.createElement("button");
+    toggleBtn.setAttribute("type", "button");
+    toggleBtn.textContent = "Read";
+    toggleBtn.addEventListener("click", (e) => {
+        //Remove book from library array
+        let book = myLibrary.find((book) => book.id === cardElement.dataset.id);
+        if (book) {
+            book.toggleRead();
+            let color = (book.read) ? "green" : "red";
+            cardElement.style.boxShadow = `0px 0px 5px 5px ${color}`;
+        }
+    });
+    return toggleBtn;
+}
+
+
 function displayBook(book) {
     let card = document.createElement("div");
     card.classList.add("book");
@@ -42,7 +64,10 @@ function displayBook(book) {
     card.setAttribute("data-id", book.id);
     card.appendChild(document.createElement("br"));
     card.appendChild(createRemoveBtn(card));
+    card.appendChild(document.createElement("br"));
+    card.appendChild(createReadToggleBtn(card));
     bookContainer.appendChild(card);
+
 }
 
 function displayBooks() {
