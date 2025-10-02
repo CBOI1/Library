@@ -22,18 +22,18 @@ function addBookToLibrary(title, author, pageCount) {
     return newBook;
 }
 
-let bookContainer = document.querySelector(".book-container");
+const bookContainer = document.querySelector(".book-container");
 
 function createRemoveBtn(cardElement) {
     removeBtn = document.createElement("button");
     removeBtn.setAttribute("type", "button");
     removeBtn.textContent = "Remove From Library";
-    removeBtn.addEventListener("click", (e) => {
+    removeBtn.addEventListener("click", () => {
         //Remove book from library array
-        let indexToRemove = myLibrary.findIndex((book) => book.id === cardElement.dataset.id);
+        const indexToRemove = myLibrary.findIndex((book) => book.id === cardElement.dataset.id);
         if (indexToRemove !== -1) {
             myLibrary.splice(indexToRemove, 0);
-            //Remove element from card element from the DOM
+            //Remove element from container element of the DOM
             bookContainer.removeChild(cardElement);
         }
     });
@@ -44,12 +44,12 @@ function createReadToggleBtn(cardElement) {
     toggleBtn = document.createElement("button");
     toggleBtn.setAttribute("type", "button");
     toggleBtn.textContent = "Read";
-    toggleBtn.addEventListener("click", (e) => {
+    toggleBtn.addEventListener("click", () => {
         //Remove book from library array
-        let book = myLibrary.find((book) => book.id === cardElement.dataset.id);
+        const book = myLibrary.find((book) => book.id === cardElement.dataset.id);
         if (book) {
             book.toggleRead();
-            let color = (book.read) ? "green" : "red";
+            const color = (book.read) ? "green" : "red";
             cardElement.style.boxShadow = `0px 0px 5px 5px ${color}`;
         }
     });
@@ -71,7 +71,7 @@ function displayBook(book) {
 }
 
 function displayBooks() {
-    for (let book of myLibrary) {
+    for (const book of myLibrary) {
         displayBook(book)
     }
 }
@@ -90,7 +90,7 @@ confirmBtn.addEventListener("click", () => {
     let title = document.querySelector("input#title").value;
     let author = document.querySelector("input#author").value;
     let pageCount = document.querySelector("input#page-count").value;
-    let book = addBookToLibrary(title, author, pageCount);
+    const book = addBookToLibrary(title, author, pageCount);
     displayBook(book);
     dialog.close();
 });
