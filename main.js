@@ -86,13 +86,21 @@ newBookBtn.addEventListener("click", () => {
 });
 
 confirmBtn.addEventListener("click", () => {
+    const authorInput = document.querySelector("input#author")
     //get user input
     let title = document.querySelector("input#title").value;
-    let author = document.querySelector("input#author").value;
+    let author = authorInput.value;
     let pageCount = document.querySelector("input#page-count").value;
-    const book = addBookToLibrary(title, author, pageCount);
-    displayBook(book);
-    dialog.close();
+    //check validitity of author field
+    if (authorInput.validity.valueMissing) {
+        authorInput.setCustomValidity("The author field must be filled");
+        authorInput.reportValidity();
+        return;
+    } else {
+        const book = addBookToLibrary(title, author, pageCount);
+        displayBook(book);
+        dialog.close();
+    }
 });
 
 closeBtn.addEventListener("click", () => {
